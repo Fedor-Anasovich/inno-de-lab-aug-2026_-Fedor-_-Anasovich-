@@ -1,14 +1,14 @@
 import functools
 import time
-# Используем классические Dict, List и Union 
-from typing import Any, Callable, Dict, List, Union
+# Используем Callable и Any из typing, а коллекции — встроенные
+from typing import Any, Callable
 
 # Константы на уровне модуля
 PERFORMANCE_LOG_PREFIX = "[PERF_LOG]"
 TIME_DECIMALS = 8
 
-# Аннотация данных о выручке жанров (
-GenreSalesData = List[Dict[str, Union[str, float]]]
+# Аннотация данных о выручке жанров в соответствии с ТЗ (PEP 604)
+GenreSalesData = list[dict[str, str | float]]
 
 
 # Кастомный декоратор для замера времени выполнения
@@ -40,7 +40,7 @@ def performance_logger(func: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 
-# 5. Основная функция отчета, обернутая декоратором
+# Основная функция отчета, обернутая декоратором
 @performance_logger
 def get_sorted_report(data: GenreSalesData) -> GenreSalesData:
     """Сортирует данные по выручке жанров кинопроката по убыванию.
@@ -60,7 +60,7 @@ def get_sorted_report(data: GenreSalesData) -> GenreSalesData:
 # --- Блок тестирования программы ---
 if __name__ == "__main__":
     # Входные данные для тестов
-    test_cases = [
+    test_cases: list[GenreSalesData] = [
         # Набор 1 (Стандартный)
         [
             {"category": "Action", "total_sales": 4311.85},
